@@ -11,7 +11,7 @@ import rosegraphics as rg
 
 def main():
     """ Calls the other functions to demonstrate them. """
-    run_test_draw_L()
+    # run_test_draw_L()
     run_test_draw_wall_on_right()
 
 
@@ -80,24 +80,32 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
 
-    ocenterx = circle.center.x
-    ocentery = circle.center.y
-    center = rg.Point(ocenterx, ocentery)
+    x = circle.center.x
+    y = circle.center.y
     for j in range(r):
-        new_circle = rg.Circle(center, circle.radius)
-        new_circle.center.y += new_circle.radius * 2 * j
-        new_circle.center.x = ocenterx
-        new_circle.attach_to(window)
         for k in range(3):
-            new_new_circle = rg.Circle(center, circle.radius)
-            new_new_circle.attach_to(window)
-            new_new_circle.center.x += new_new_circle.radius * 2
+            ncircle = rg.Circle(rg.Point(x, y), circle.radius)
+            ncircle.fill_color = circle.fill_color
+            ncircle.attach_to(window)
             window.render(.1)
+            x += circle.radius * 2
+        x = circle.center.x
+        y += circle.radius * 2
 
-            # ------------------------------------------------------------------
-            # TODO: 2. Implement and test this function.
-            #     The testing code is already written for you (above).
-            # ------------------------------------------------------------------
+    for j in range(3):
+        for k in range(c + 3):
+            ncircle = rg.Circle(rg.Point(x, y), circle.radius)
+            ncircle.fill_color = circle.fill_color
+            ncircle.attach_to(window)
+            window.render(.1)
+            x += circle.radius * 2
+        x = circle.center.x
+        y += circle.radius * 2
+
+        # ------------------------------------------------------------------
+        # DONE: 2. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # ------------------------------------------------------------------
 
 
 def run_test_draw_wall_on_right():
@@ -135,10 +143,31 @@ def draw_wall_on_right(rectangle, n, window):
       :type window: rg.RoseWindow
     and n is a small, positive integer.
     """
-    # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
-    #     The testing code is already written for you (above).
-    # ------------------------------------------------------------------
+
+    corner1 = rectangle.corner_1
+    corner2 = rectangle.corner_2
+    x1 = corner1.x
+    y1 = corner1.y
+    x2 = corner2.x
+    y2 = corner2.y
+    for j in range(n):
+        for k in range(j + 1):
+            corner1 = rg.Point(x1, y1)
+            corner2 = rg.Point(x2, y2)
+            nrect = rg.Rectangle(corner1, corner2)
+            nrect.attach_to(window)
+            window.render(.1)
+            x1 -= rectangle.get_width()
+            x2 -= rectangle.get_width()
+        x1 = rectangle.corner_1.x
+        x2 = rectangle.corner_2.x
+        y1 += rectangle.get_height()
+        y2 += rectangle.get_height()
+
+        # ------------------------------------------------------------------
+        # DONE: 3. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # ------------------------------------------------------------------
 
 
 # ----------------------------------------------------------------------
